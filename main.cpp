@@ -3,44 +3,14 @@
 #include <fstream>
 #include <string>
 #include "union_find.h"
+#include "Perkolacja.h"
 #include <algorithm>
 #include <array>
 #include <cassert>
 
 
 using namespace std;
-const int N=100;
-int Tab[N][N];
-float P1 = 0.6;
-int starNo;
 
-void percol()               //rysuje o jedno pole za duzo - ostatnia linia -??
-{
-    for(int i=1;i<=N;i++)
-     {
-         starNo=i-1;
-
-         for(int j=0;j<starNo;j++)
-         {
-            Tab[i][j] = 0;
-            double pg = rand() / float(RAND_MAX);
-
-            if (pg <= P1) {
-                    printf("%c",'*');
-                   Tab[i][j] = -1;
-                 //  cout<<Tab[i][j];
-                          }
-            else{
-
-                    printf("%c",'0');
-                    Tab[i][j] = 0;
-                   //  cout<<Tab[i][j];
-                }
-
-         }
-         printf("\n");
-     }
-}
 
 size_t key(size_t y, size_t x) { return N * y + x; }
 
@@ -57,24 +27,22 @@ void sprawdz(UnionFind & uf)
     auto iter = std::unique(cluster_store.begin(), cluster_store.end());
    // std::cout << "\nTrojkat o wymiarach:\n";
     auto cluster_cnt = std::distance(cluster_store.begin(), iter);
-    std::cout << "liczba klastrów wynosi " << cluster_cnt << "\n";
+    std::cout << "liczba klastrow wynosi " << cluster_cnt << "\n";
 }
 
 int main()
 {
-    percol();
-
-    std::array<std::array, N> percol(); //sprawdzic jak to porownac
+    std::array<std::string, N> {percol()}; //sprawdzic jak to porownac
     std::vector<std::vector<int>> klucze(N);
     for (auto& vec : klucze) vec.resize(N, -1);
 
     size_t liczba_elementow = 0;
     for (size_t y = 0; y < N; y++)
     {
-        assert(input[y].length() == N);
+        assert(percol[y].length() == N);
         for (size_t x = 0; x < N; x++)
         {
-            if (input[y][x] != '0')
+            if (percol[y][x] != '0')
             {
                 klucze[y][x] = liczba_elementow;
                 liczba_elementow++;
@@ -107,15 +75,15 @@ int main()
 
     std::cout << "a:\n";
     if (klucz_0 < 0 || klucz_1 < 0)
-        std::cout << "naro¿niki nie s¹ po³¹czone\n";
+        std::cout << "narozniki nie sa polaczone\n";
     else
     {
         auto root_0 = uf.set_find(klucze[0][0]);
         auto root_1 = uf.set_find(klucze[N - 1][N - 1]);
         if (root_0 == root_1)
-            std::cout << "naro¿niki s¹ po³¹czone\n";
+            std::cout << "narozniki sa polaczone\n";
         else
-            std::cout << "naro¿niki nie s¹ po³¹czone\n";
+            std::cout << "narozniki nie sa polaczone\n";
     }
 
     std::cout << "\nb:\n";
@@ -137,9 +105,9 @@ int main()
     std::set_intersection(top_roots.begin(), top_roots.end(), bottom_roots.begin(), bottom_roots.end(),
                           std::back_inserter(shared_roots));
     if (shared_roots.empty())
-        std::cout << "górny i dolny wiersz nie s¹ po³¹czone\n";
+        std::cout << "gorny i dolny wiersz nie sÄ… poÅ‚Ä…czone\n";
     else
-        std::cout << "górny i dolny wiersz s¹ po³¹czone " << shared_roots.size() << " klastrami\n";
+        std::cout << "gorny i dolny wiersz sÄ… poÅ‚Ä…czone " << shared_roots.size() << " klastrami\n";
 
     sprawdz(uf);
 }
