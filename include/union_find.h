@@ -3,15 +3,18 @@
 
 #include <vector>
 #include <numeric>
+#include <stdexcept>
 
 using Punkt = std::pair<int, int>;
 
 class UnionFind
 {
   public:
-    UnionFind(size_t size)  //
+    UnionFind(int size)  //
         : next(size), rank(size)
     {
+        if (size < 0 || size > 100000000)
+            throw std::invalid_argument("invalid 'size' in UnionFind: " + std::to_string(size));
         // początkowo każdy rekord danych to samodzielny zbiór
         // next = {0, 1, 2,...}; czyli next[i] = i, czyli każdy element pokazuje samego siebie
         std::iota(next.begin(), next.end(), 0);

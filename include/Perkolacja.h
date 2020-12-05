@@ -1,47 +1,36 @@
 #ifndef PERKOLACJA_H
 #define PERKOLACJA_H
 
+#include "union_find.h"
+
+#include <cassert>
+#include <iosfwd>
+#include <vector>
 
 class Perkolacja
 {
+  public:
+    using Node = int;
+    constexpr static Node OCCUPIED = 1;     // wezel zajety
+    constexpr static Node UNOCCUPIED = 0;   // wezel wolny
+    constexpr static int MAX_SIZE = 100000; // maksymalny dopuszczalny rozmiar ukladu
 
-    const int N = 100;
-    float P1 = 0.6;
+    Perkolacja(int N, float P1);
 
-    public:
+    auto key(int y, int x) const
+    {
+        assert(y < N && x <= y && x >= 0);
+        return N * y + x;
+    }
+    auto prob() const { return P1; }
+    auto size() const { return N; }
+    void print(std::ostream& out) const;
 
-        void Perkolacja()               //rysuje o jedno pole za du¿o - ostatnia linia -??
-        {
-            for(int i=1;i<=N;i++)
-             {
-                 int starNo=i-1;
-
-                 for(int j=0;j<starNo;j++)
-                 {
-                    Tab[i][j] = 0;
-                    double pg = rand() / float(RAND_MAX);
-
-                    if (pg <= P1) {
-                            printf("%c",'*');
-                           Tab[i][j] = -1;
-                         //  cout<<Tab[i][j];
-                                  }
-                    else{
-
-                            printf("%c",'0');
-                            Tab[i][j] = 0;
-                           //  cout<<Tab[i][j];
-                        }
-
-                 }
-                 printf("\n");
-             }
-        }
-
-    protected:
-
-    private:
-    std::vector<size_t> siatka;
+  private:
+    const int N;
+    const float P1;
+    std::vector<std::vector<int>> siatka;
+    UnionFind uf;
 };
 
-#endif // PERKOLACJA_H
+#endif  // PERKOLACJA_H

@@ -1,12 +1,40 @@
 #include "Perkolacja.h"
 
-Perkolacja::Perkolacja()
-{
+#include <cstdio>
+#include <cstdlib>
+#include <stdexcept>
+#include <ostream>
 
-    //ctor
+Perkolacja::Perkolacja(int N, float P1) : N{N}, P1{P1}, uf{N*(N+1)/2}
+{
+    using namespace std::literals::string_literals;
+
+    if (N <= 0 || N > MAX_SIZE) throw std::invalid_argument("N out of range in "s + __FUNCTION__);
+
+    siatka.resize(N);
+    for (auto & row: siatka)
+    {
+        row.resize(N);
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            double r = rand() / float(RAND_MAX);
+            siatka[i][j] = (r <= prob()) ? OCCUPIED : UNOCCUPIED;
+        }
+    }
 }
 
-Perkolacja::~Perkolacja()
+void Perkolacja::print(std::ostream& out) const
 {
-    //dtor
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            out << siatka[i][j];
+        }
+        out << "\n";
+    }
 }
