@@ -25,12 +25,17 @@ class Perkolacja
     auto prob() const { return P1; }
     auto size() const { return N; }
     void print(std::ostream& out) const;
+    void add_node(int x, int y);  // dodaj węzeł
+    bool spans_3_sides() const;   // czy istnieje klaster spinający 3 krawędzie?
+    int modeluj(); // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
     const int N;
     const float P1;
     std::vector<std::vector<int>> siatka;
-    UnionFind uf;
+    UnionFind uf;  // poprawić później żeby można było dokonać detekcji perkolacji 3-nożnej
+    std::vector<std::pair<int,int>> kolejka_wezlow; // wszystkie punkty siatki w losowej kolejności
+    int node_counter = 0;
 };
 
 #endif  // PERKOLACJA_H
