@@ -34,7 +34,7 @@ class Perkolacja
     void print(std::ostream& out) const;
     void add_node(int x, int y){            // dodaj węzeł
 
-        std::vector<int> kolejka_wezlow = {1,3,4,9};//przykładowe węzły
+        std::vector<int> kolejka_wezlow = {};//przykładowe węzły
 
         std::random_device rd;
         std::mt19937 g(rd());

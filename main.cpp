@@ -33,6 +33,7 @@ int main()
    Perkolacja percol {10, 0.6};
    percol.print(std::cout);
 
+
 }
 
 
