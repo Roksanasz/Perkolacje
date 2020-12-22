@@ -52,7 +52,26 @@ class Perkolacja
             std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
 
     }
-    bool spans_3_sides() const;   // czy istnieje klaster spinający 3 krawędzie?
+
+    bool spans_3_sides() const{
+        auto key1 = kolejka_wezlow[i][0];// lewy bok tókąta-> wspolrzedne [x][y]
+        if(i==j)auto key2 = kolejka_wezlow[i][j];
+        auto key3 = kolejka_wezlow[N - 1][N - 1];//dolna ścianka
+
+        if (key1 < 0 || key2 < 0 || key3 <0)
+            return true;
+        else
+            {
+                int root1 = uf.set_find(kolejka_wezlow[i][0]);
+                if(i==j)int root2 = uf.set_find(kolejka_wezlow[i][j]);
+                int root3 = uf.set_find(kolejka_wezlow[N - 1][N - 1])
+                if (root1 == root2 == root3)
+                    return true;
+                else
+                    return false;
+            }
+
+    };   // czy istnieje klaster spinający 3 krawędzie?
     int modeluj(){}; // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
