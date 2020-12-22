@@ -32,19 +32,17 @@ class Perkolacja
     auto prob() const { return P1; }
     auto size() const { return N; }
     void print(std::ostream& out) const;
-    void add_node(int x, int y){// dodaj węzeł
-        std::vector<int> kolejka_wezlow = {};//przykładowe węzły
+    void add_node(int x, int y){            // dodaj węzeł
 
-            std::random_device rd;
-            std::mt19937 g(rd());
+        std::vector<int> kolejka_wezlow = {1,3,4,9};//przykładowe węzły
 
-            std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
 
     }
     bool spans_3_sides() const;   // czy istnieje klaster spinający 3 krawędzie?
     int modeluj(){}; // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
-
-
 
   private:
     const int N;
