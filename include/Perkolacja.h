@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
-
+#include <ctime>
 
 class Perkolacja
 {
@@ -34,11 +34,22 @@ class Perkolacja
     void print(std::ostream& out) const;
     void add_node(int x, int y){            // dodaj węzeł
 
-        std::vector<int> kolejka_wezlow = {};//przykładowe węzły
-
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
+        std::vector<int> kolejka_wezlow;// = {1,5,8,19};//przykładowe węzły
+        srand( time( NULL ) );
+            //zapis
+            kolejka_wezlow.push_back( 0 );
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                int gdzie = rand() % kolejka_wezlow.size();
+                kolejka_wezlow.insert( kolejka_wezlow.begin() + gdzie, i );
+          //      kolejka_wezlow.insert( kolejka_wezlow.begin() + gdzie, j );//nie wiem czy tak mogę-chciałam uzyskać węzły o 2 współrzędnych
+                }
+            }
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
 
     }
     bool spans_3_sides() const;   // czy istnieje klaster spinający 3 krawędzie?
