@@ -60,9 +60,18 @@ class UnionFind
     }
     size_t get_rank(size_t n) const { return rank[n]; }
     size_t size() const { return rank.size(); }
+    bool spans_3_sides(int numer_wezla) const
+    {
+        /// TA FUNKCJA NIE MA IMPLEMENTACJI!
+        return false;
+
+    }
 
   private:
     std::vector<size_t> next;
     std::vector<int> rank;
+    std::vector<bool> connected_to_bottom;
+    std::vector<bool> connected_to_vertical;
+    std::vector<bool> connected_to_diagonal;
 };
 #endif  // UNION_FIND_H
