@@ -68,7 +68,7 @@ class UnionFind
     }
 
   private:
-    std::vector<size_t> next;
+    std::vector<int> next;
     std::vector<int> rank;
     std::vector<bool> connected_to_bottom;
     std::vector<bool> connected_to_vertical;
