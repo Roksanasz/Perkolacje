@@ -5,14 +5,19 @@
 #include <stdexcept>
 #include <ostream>
 
-Perkolacja::Perkolacja(int N, float P1) : N{N}, P1{P1}, uf{N*(N+1)/2}
+Perkolacja::Perkolacja(int N,                                //
+                       float P1,                             //
+                       const std::vector<unsigned>& side_1,  //
+                       const std::vector<unsigned>& side_2,  //
+                       const std::vector<unsigned>& side_3)
+    : N{N}, P1{P1}, uf{N * (N + 1) / 2, side_1, side_2, side_3}
 {
     using namespace std::literals::string_literals;
 
     if (N <= 0 || N > MAX_SIZE) throw std::invalid_argument("N out of range in "s + __FUNCTION__);
 
     siatka.resize(N);
-    for (auto & row: siatka)
+    for (auto& row : siatka)
     {
         row.resize(N);
     }

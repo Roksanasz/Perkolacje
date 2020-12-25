@@ -4,13 +4,17 @@
 #include <vector>
 #include <numeric>
 #include <stdexcept>
+#include <vector>
 
 using Punkt = std::pair<int, int>;
 
 class UnionFind
 {
   public:
-    UnionFind(int size)  //
+    UnionFind(int size,                                            //
+              const std::vector<unsigned>& horizontal_nodes = {},  // numery węzłów na krawędzi poziomej
+              const std::vector<unsigned>& vertical_nodes = {},    // numery węzłów na krawędzi pionowej
+              const std::vector<unsigned>& diagonal_nodes = {})    // numery węzłów na krawędzi ukośnej
         : next(size), rank(size)
     {
         if (size < 0 || size > 100000000)
@@ -19,6 +23,7 @@ class UnionFind
         // next = {0, 1, 2,...}; czyli next[i] = i, czyli każdy element pokazuje samego siebie
         std::iota(next.begin(), next.end(), 0);
     }
+    ~UnionFind() = default;
 
     size_t set_find(size_t i)
     {
@@ -64,13 +69,12 @@ class UnionFind
     {
         /// TA FUNKCJA NIE MA IMPLEMENTACJI!
         return false;
-
     }
 
   private:
     std::vector<int> next;
     std::vector<int> rank;
-    std::vector<bool> connected_to_bottom;
+    std::vector<bool> connected_to_horizontal;
     std::vector<bool> connected_to_vertical;
     std::vector<bool> connected_to_diagonal;
 };
