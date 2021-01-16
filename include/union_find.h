@@ -53,7 +53,11 @@ class UnionFind
         if (rank[root_i] < rank[root_j])
         {
             next[root_i] = root_j;
+            connected_to_diagonal[root_j] = connected_to_diagonal[root_j] || connected_to_diagonal[root_i];
+            connected_to_horizontal[root_j] = connected_to_horizontal[root_j] || connected_to_horizontal[root_i];
+            connected_to_vertical[root_j] = connected_to_vertical[root_j] || connected_to_vertical[root_i];
         }
+
         else
         {
             next[root_j] = root_i;
@@ -61,14 +65,17 @@ class UnionFind
             {
                 rank[root_i]++;
             }
+            connected_to_diagonal[root_i] = connected_to_diagonal[root_j] || connected_to_diagonal[root_i];
+            connected_to_horizontal[root_i] = connected_to_horizontal[root_j] || connected_to_horizontal[root_i];
+            connected_to_vertical[root_i] = connected_to_vertical[root_j] || connected_to_vertical[root_i];
         }
     }
     size_t get_rank(size_t n) const { return rank[n]; }
     size_t size() const { return rank.size(); }
     bool spans_3_sides(int numer_wezla) const
     {
-        /// TA FUNKCJA NIE MA IMPLEMENTACJI!
-        return false;
+
+        return connected_to_diagonal[numer_wezla] &&connected_to_horizontal[numer_wezla]&&connected_to_vertical[numer_wezla];
     }
 
   private:

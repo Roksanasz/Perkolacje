@@ -7,7 +7,6 @@
 #include <iosfwd>
 #include <vector>
 #include <stdio.h>
-#include <gsl/gsl_rng.h>
 #include <random>
 #include <algorithm>
 #include <iterator>
@@ -76,7 +75,7 @@ class Perkolacja
 
         return uf.spans_3_sides(numer_wezla);
     };                // czy istnieje klaster spinający 3 krawędzie?
-    int modeluj(){};  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
+    int modeluj(){return 0;}  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
     const int N;
