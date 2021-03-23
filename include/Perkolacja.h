@@ -22,9 +22,8 @@ class Perkolacja
     constexpr static int MAX_SIZE = 100000;  // maksymalny dopuszczalny rozmiar ukladu
 
     Perkolacja(int N, float P1, const std::vector<unsigned>& side_1, const std::vector<unsigned>& side_2,
-               const std::vector<unsigned>& side_3);
-
-    auto key(int y, int x) const
+               const std::vector<unsigned>& side_3, std::mt19937 &rng);
+    auto key(int x, int y) const
     {
         assert(y < N && x <= y && x >= 0);
         return N * y + x;
@@ -32,26 +31,34 @@ class Perkolacja
     auto prob() const { return P1; }
     auto size() const { return N; }
     void print(std::ostream& out) const;
-    void add_node(int x, int y)
+    bool add_node(int x, int y)
     {  // dodaj węzeł
 
-        std::vector<int> kolejka_wezlow;  // = {1,5,8,19};//przykładowe węzły
-        srand(time(NULL));
-        // zapis
-        kolejka_wezlow.push_back(0);
-        for (int i = 0; i < N; i++)
+        int gran = N-1;
+        auto numer_wezla = key(x, y);
+        if (x > 0)
         {
-            for (int j = 0; j < i; j++)
-            {
-                int gdzie = rand() % kolejka_wezlow.size();
-                kolejka_wezlow.insert(kolejka_wezlow.begin() + gdzie, i);
-                //      kolejka_wezlow.insert( kolejka_wezlow.begin() + gdzie, j );//nie wiem czy tak mogę-chciałam
-                //      uzyskać węzły o 2 współrzędnych
-            }
+            auto numer_sasiada = key(x-1, y);
+            uf.set_union(numer_wezla,numer_sasiada);
         }
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), g);
+        if (x < gran)
+        {
+            auto numer_sasiada = key(x+1, y);
+            uf.set_union(numer_wezla,numer_sasiada);
+        }
+        if (y > 0)
+        {
+            auto numer_sasiada = key(x, y-1);
+            uf.set_union(numer_wezla,numer_sasiada);
+        }
+        if (y < gran)
+        {
+            auto numer_sasiada = key(x, y+1);
+            uf.set_union(numer_wezla,numer_sasiada);
+        }
+
+        node_counter++;
+        return spans_3_sides(numer_wezla);
     }
 
     bool spans_3_sides(int numer_wezla) const
@@ -59,7 +66,7 @@ class Perkolacja
 
         return uf.spans_3_sides(numer_wezla);
     };                // czy istnieje klaster spinający 3 krawędzie?
-    int modeluj(){return 0;}  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
+    int modeluj();  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
     const int N;

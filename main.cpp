@@ -31,46 +31,26 @@ int main()
     int N = 10;
     std::vector<unsigned> side1,side2,side3;
 
-    //int pionowa(int i), pozioma(int i),diag(int i);
 
 
-    /*pionowa(i)
-    {
-        return i*(i+N)/2;
-    }
-    diag(i)
-    {
-        return i*(i+3)/2;
-    }
-    pozioma(i)
-    {
-        return // tu przedział od N(N-1)/2 DO (N(N+1)/2)-1...
-    }
+
     for(int i=0; i<=N;i++){
-        side1.push_back(pionowa(i));
+        side1.push_back(i*(i+1)/2);
     }
 
-   for(int i=0; i<=N;i++){
-     side2.push_back(diag(i));
-    }
-   for(int i=0; i<=N;i++){
-     side3.push_back(pozioma(i));
-    }*/
-
-    std::vector<unsigned> pionowa ={0};
-    for(int i=0; i<=N;i++){
-        pionowa.push_back(i*(i+2)/2);
-    }
-    std::vector<unsigned> diag ={0};
     for(int i=0; i<N;i++){
-        diag.push_back(i*(i+3)/2);
+        side3.push_back(i*(i+3)/2);
     }
-    std::vector<unsigned> pozioma ={pionowa.back()};
+
     for(int i=0; i<N;i++){
-        pozioma.push_back(pozioma.back()+i);
+        side2.push_back(side1.back()+i);
     }
 
 
-    Perkolacja percol{10, 0.6, side1, side2, side3};
+
+
+    std::random_device rd;
+    std::mt19937 rand(rd());
+    Perkolacja percol{10, 0.6, side1, side2, side3,rand};
     percol.print(std::cout);
 }

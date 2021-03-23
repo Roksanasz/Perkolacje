@@ -9,7 +9,8 @@ Perkolacja::Perkolacja(int N,                                //
                        float P1,                             //
                        const std::vector<unsigned>& side_1,  //
                        const std::vector<unsigned>& side_2,  //
-                       const std::vector<unsigned>& side_3)
+                       const std::vector<unsigned>& side_3,  //
+                             std::mt19937 &rng)
     : N{N}, P1{P1}, uf{N * (N + 1) / 2, side_1, side_2, side_3}
 {
     using namespace std::literals::string_literals;
@@ -22,14 +23,8 @@ Perkolacja::Perkolacja(int N,                                //
         row.resize(N);
     }
 
-    for (int i = 0; i < N; i++)
-    {
-        for (int j = 0; j < i; j++)
-        {
-            double r = rand() / float(RAND_MAX);
-            siatka[i][j] = (r <= prob()) ? OCCUPIED : UNOCCUPIED;
-        }
-    }
+
+    std::shuffle(kolejka_wezlow.begin(), kolejka_wezlow.end(), rng);
 }
 
 void Perkolacja::print(std::ostream& out) const
@@ -42,4 +37,9 @@ void Perkolacja::print(std::ostream& out) const
         }
         out << "\n";
     }
+}
+
+int Perkolacja::modeluj()
+{
+
 }
