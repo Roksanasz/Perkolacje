@@ -15,13 +15,26 @@ class UnionFind
               const std::vector<unsigned>& horizontal_nodes = {},  // numery węzłów na krawędzi poziomej
               const std::vector<unsigned>& vertical_nodes = {},    // numery węzłów na krawędzi pionowej
               const std::vector<unsigned>& diagonal_nodes = {})    // numery węzłów na krawędzi ukośnej
-        : next(size), rank(size)
+        : next(size), rank(size), connected_to_horizontal(size, false),connected_to_vertical(size,false),connected_to_diagonal(size,false)
     {
         if (size < 0 || size > 100000000)
             throw std::invalid_argument("invalid 'size' in UnionFind: " + std::to_string(size));
         // początkowo każdy rekord danych to samodzielny zbiór
         // next = {0, 1, 2,...}; czyli next[i] = i, czyli każdy element pokazuje samego siebie
         std::iota(next.begin(), next.end(), 0);
+        for(auto n: horizontal_nodes)
+        {
+            connected_to_horizontal[n]=true;
+        }
+        for(auto n: vertical_nodes)
+        {
+            connected_to_vertical[n]=true;
+        }
+        for(auto n: diagonal_nodes)
+        {
+            connected_to_diagonal[n]=true;
+        }
+
     }
     ~UnionFind() = default;
 

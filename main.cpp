@@ -25,32 +25,20 @@ void sprawdz(UnionFind& uf)
     std::cout << "liczba klastrow wynosi " << cluster_cnt << "\n";
 }
 
+
+
 int main()
 {
     //int i;
-    int N = 10;
-    std::vector<unsigned> side1,side2,side3;
-
-
-
-
-    for(int i=0; i<=N;i++){
-        side1.push_back(i*(i+1)/2);
-    }
-
-    for(int i=0; i<N;i++){
-        side3.push_back(i*(i+3)/2);
-    }
-
-    for(int i=0; i<N;i++){
-        side2.push_back(side1.back()+i);
-    }
-
-
-
 
     std::random_device rd;
     std::mt19937 rand(rd());
-    Perkolacja percol{10, 0.6, side1, side2, side3,rand};
-    percol.print(std::cout);
+    for(int i = 0; i < 10; i++)
+    {
+        Perkolacja percol{5, 0.6, rand};
+        int n = percol.modeluj();
+        std::cout << n << endl;
+        percol.print(std::cout);
+    }
+    //
 }
