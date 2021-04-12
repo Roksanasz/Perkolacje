@@ -37,8 +37,9 @@ int main()
     {
         Perkolacja percol{5, 0.6, rand};
         int n = percol.modeluj();
-        std::cout << n << endl;
+        std::cout << n << ":\n";
         percol.print(std::cout);
+        std::cout << "\n";
     }
     //
 }

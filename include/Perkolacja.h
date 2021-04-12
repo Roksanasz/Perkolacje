@@ -29,56 +29,76 @@ class Perkolacja
             std::cout<< " mmm"<< std::endl;
         }
         assert(y < N && x <= y && x >= 0);
-        return y*(y+1)/2+x;
+        return y * (y + 1) / 2 + x;
     }
-    std::vector <unsigned> pionowa();
-    std::vector <unsigned> diag();
-    std::vector <unsigned> pozioma();
+    std::vector<unsigned>pionowa();
+    std::vector<unsigned>diag();
+    std::vector<unsigned>pozioma();
     auto prob() const { return P1; }
     auto size() const { return N; }
     void print(std::ostream& out) const;
     bool add_node(int x, int y)
     {  // dodaj węzeł
 
-        int gran = N-1;//to by było dla siatki kwadratowej dla krawędzi dolnej i prawej
+
+        assert (siatka [y][x] == 0);
+        siatka[y][x] = 1;
+        int gran = N-1;
+
         auto numer_wezla = key(x, y);
+
         if (x > 0)
         {
-            auto numer_sasiada = key(x-1, y);
-            uf.set_union(numer_wezla,numer_sasiada);
+            auto numer_sasiada = key(x - 1, y);
+            if(siatka[y][x-1] != 0)
+            {
+                uf.set_union(numer_wezla,numer_sasiada);
+            }
         }
         if (x < y)
         {
-            auto numer_sasiada = key(x+1, y);
-            uf.set_union(numer_wezla,numer_sasiada);
+            auto numer_sasiada = key(x + 1, y);
+            if (siatka[y][x + 1] !=0)
+            {
+                uf.set_union(numer_wezla, numer_sasiada);
+            }
+
         }
-        if (y > 0 && y!=x)
+        if (y > 0 && y != x)
         {
-            auto numer_sasiada = key(x, y-1);
-            uf.set_union(numer_wezla,numer_sasiada);
+            auto numer_sasiada = key(x, y - 1);
+            if (siatka[y - 1][x] !=0)
+            {
+                uf.set_union(numer_wezla, numer_sasiada);
+            }
+
         }
         if (y < gran)
         {
-            auto numer_sasiada = key(x, y+1);
-            uf.set_union(numer_wezla,numer_sasiada);
+            auto numer_sasiada = key(x, y + 1);
+            if (siatka[y + 1][x] != 0)
+            {
+              uf.set_union(numer_wezla, numer_sasiada);
+            }
+
         }
 
         node_counter++;
         return spans_3_sides(numer_wezla);
     }
 
-    bool spans_3_sides(int numer_wezla) const
+    bool spans_3_sides(int numer_wezla)
     {
 
         return uf.spans_3_sides(numer_wezla);
     };                // czy istnieje klaster spinający 3 krawędzie?
-    int modeluj();;  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
+    int modeluj();  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
     const int N;
     const float P1;
     std::vector<std::vector<int>> siatka;
-    UnionFind uf;  // poprawić później żeby można było dokonać detekcji perkolacji 3-nożnej
+    UnionFind uf;
     std::vector<std::pair<int, int>> kolejka_wezlow;  // wszystkie punkty siatki w losowej kolejności
     int node_counter = 0;
 };

@@ -17,7 +17,7 @@ Perkolacja::Perkolacja(int N, float P1, std::mt19937 &rng)
     {
         row.resize(N);
     }
-//std::pair<int, int>
+
     int idx = 0;
     for ( int y = 0; y < N; y++)
     {
@@ -58,11 +58,11 @@ std::vector<unsigned> Perkolacja::pozioma(){
 
 void Perkolacja::print(std::ostream& out) const
 {
-    for (int i = 0; i < N; i++)
+    for (int y = 0; y < N; y++)
     {
-        for (int j = 0; j < i; j++)
+        for (int x = 0; x < y; x++)
         {
-            out << siatka[i][j];
+            out << siatka[y][x];
         }
         out << "\n";
     }
