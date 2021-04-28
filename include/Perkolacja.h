@@ -21,7 +21,7 @@ class Perkolacja
     constexpr static Node UNOCCUPIED = 0;    // wezel wolny
     constexpr static int MAX_SIZE = 100000;  // maksymalny dopuszczalny rozmiar ukladu
 
-    Perkolacja(int N, float P1, std::mt19937 &rng);
+    Perkolacja(int N, double P1, std::mt19937 &rng);
     auto key(int x, int y) const
     {
         if(!(y < N && x <= y && x >= 0))
@@ -92,11 +92,11 @@ class Perkolacja
 
         return uf.spans_3_sides(numer_wezla);
     };                // czy istnieje klaster spinający 3 krawędzie?
-    int modeluj();  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
+    bool modeluj();  // dodawaj węzły z kolejka_węzłów aż spans 3_sides zwróci true, zwróć liczbę węzłów
 
   private:
     const int N;
-    const float P1;
+    const double P1;
     std::vector<std::vector<int>> siatka;
     UnionFind uf;
     std::vector<std::pair<int, int>> kolejka_wezlow;  // wszystkie punkty siatki w losowej kolejności

@@ -10,22 +10,7 @@
 
 using namespace std;
 
-void sprawdz(UnionFind& uf)
-{
-    auto size = uf.size();
-    std::vector<size_t> cluster_store(size);
-    for (size_t i = 0; i < size; i++)
-    {
-        cluster_store[i] = uf.set_find(i);
-    }
-    std::sort(cluster_store.begin(), cluster_store.end());
-    auto iter = std::unique(cluster_store.begin(), cluster_store.end());
-    // std::cout << "\nTrojkat o wymiarach:\n";
-    auto cluster_cnt = std::distance(cluster_store.begin(), iter);
-    std::cout << "liczba klastrow wynosi " << cluster_cnt << "\n";
-}
-
-
+const double PC = 0.59274605079210;
 
 int main()
 {
@@ -33,12 +18,19 @@ int main()
 
     std::random_device rd;
     std::mt19937 rand(rd());
-    for(int i = 0; i < 10; i++)
+
+
+    // funkcja od N i L, wynik do pliku
+    const int L = 100;
+    int znalezione = 0;
+    int N = 10000;
+    for(int i = 0; i < N; i++)
     {
-        Perkolacja percol{5, 0.6, rand};
-        int n = percol.modeluj();
-        std::cout << n << ":\n";
-        percol.print(std::cout);
+        Perkolacja percol{L, PC, rand};
+        bool b = percol.modeluj();
+        znalezione += b;
+//        percol.print(std::cout);
+        std::cout << b << " "  << double(znalezione)/(i+1.0)<<  "\n";
         std::cout << "\n";
     }
     //
