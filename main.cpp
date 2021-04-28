@@ -21,6 +21,9 @@ int main()
 
 
     // funkcja od N i L, wynik do pliku
+    // zrobić jakieś symulacje dla kilku różnych L, np. 8, 16, 32, 64, 128, 256
+    // N rzędu 10^8
+    // wyznaczyc
     const int L = 100;
     int znalezione = 0;
     int N = 10000;
