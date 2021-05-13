@@ -17,38 +17,31 @@ int policz(int N, int L)
     std::mt19937 rand(rd());
     int znalezione = 0;
     std::ofstream plik;
-    plik.open ("dane.txt", std::fstream::app);
-    plik <<"Wyniki dla N= "<< N <<" oraz L= "<< L << ": "<< "\n";
+    plik.open ("dane_"+std::to_string(L)+".csv", std::ios::app);
+   // plik <<"Wyniki dla N= "<< N <<" oraz L= "<< L << ": "<< "\n";
     for(int i = 0; i < N; i++)
         {
             Perkolacja percol{L, PC, rand};
             bool b = percol.modeluj();
             znalezione += b;
 
-            std::cout << b << " "  << double(znalezione)/(i+1.0)<<  "\n";
+
             //std::cout << "\n";
 
-    plik <<  b << " "  << double(znalezione)/(i+1.0)<<  "\n";
-        }
 
+        }
+        plik <<  double(znalezione)/ N<< "\t"<< N<<  "\n";
         plik.close();
         return 0;
 
 };
-int main()
+int main(int argc, const char* argv[])
 {
-    //int i;
 
-
-
-
-    // funkcja od N i L, wynik do pliku
-    // zrobić jakieś symulacje dla kilku różnych L, np. 8, 16, 32, 64, 128, 256
-    // N rzędu 10^8
-    // wyznaczyc
-    const int L = 4;
-
+    int L= 4;
     int N = 100000000;
 
+    if (argc >= 2) L= stoi(argv[1]);
+    if (argc >= 3) N = stoi(argv[2]);
     policz(N,L);
 }
