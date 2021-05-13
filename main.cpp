@@ -30,6 +30,7 @@ int policz(int N, int L)
 
 
         }
+        plik.precision(12);
         plik <<  double(znalezione)/ N<< "\t"<< N<<  "\n";
         plik.close();
         return 0;
